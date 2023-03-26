@@ -8,12 +8,27 @@ function Users() {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
+    console.log(id);
     axios.get(`http://localhost:3001/users/${id}`).then((res) => {
-      setUser(res.data);
+      const { data } = res;
+      // console.log(res.data.data);
+      let resoult = data.data.map(function (list, index, array) {
+        // console.log(list);
+        return list;
+        // 依據UI需要轉換欄位名稱
+        // return {id: list.ID, name: list.USER_ID, location: list.LOCATION_ID, type: list.TYPE};
+      });
+      console.log(resoult);
+
+      setUser(resoult);
+      // console.log(user[0].NAME);
+      // console.log(user[0].FULL_NAME);
+      // console.log(user[0].COMMENT);
     });
-  }, []);
+  }, [id]);
 
   console.log(user);
+  console.log("Return:");
   return (
     <>
       <div className="h-full w-full flex flex-col mt-32 justify-center items-center">
@@ -23,7 +38,7 @@ function Users() {
         >
           Back To Home
         </Link>
-        {user && (
+        {user[0] && (
           <div className="w-[700px] h-[200] px-6 py-4 flex shadow-xl rounded-xl justify-center items-center bg-teal-600 mt-16 border-teal-800 border-2">
             <div className="w-5/12 flex flex-col space-y-4">
               <h2 className="text-white font-bold text-3xl border-black border-b-2">
@@ -38,13 +53,13 @@ function Users() {
             </div>
             <div className="w-7/12 flex flex-col space-y-4  ">
               <h2 className="text-teal-200 font-bold text-3xl border-black border-b-2">
-                {user.name}
+                {user[0].NAME}
               </h2>
               <h2 className="text-teal-200 font-bold text-3xl border-black border-b-2">
-                {user.email}
+                {user[0].FULL_NAME}
               </h2>
               <h2 className="text-teal-200 font-bold text-3xl border-black border-b-2">
-                {user.phone}
+                {user[0].COMMENT}
               </h2>
             </div>
           </div>

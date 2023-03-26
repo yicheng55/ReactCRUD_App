@@ -7,7 +7,8 @@ function Home() {
 
   function loadUsers() {
     axios.get("http://localhost:3001/users").then((res) => {
-      setUsers(res.data.reverse());
+      setUsers(res.data.data);
+      // setUsers(res.data.reverse());
     });
   }
 
@@ -65,36 +66,36 @@ function Home() {
                   <tbody className="border-black border-b-2">
                     {users.map((data, index) => (
                       <tr
-                        key={index}
+                        key={data.ID}
                         className="bg-white border-b-2 border-black"
                       >
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 ">
-                          {index + 1}
+                          {data.ID}
                         </td>
                         <td className="text-xl text-gray-900 font-semibold px-6 py-4 whitespace-nowrap">
-                          {data.name}
+                          {data.NAME}
                         </td>
                         <td className="text-xl text-gray-900 font-semibold px-6 py-4 whitespace-nowrap">
-                          {data.email}
+                          {data.FULL_NAME}
                         </td>
                         <td className="text-xl text-gray-900 font-semibold px-6 py-4 whitespace-nowrap">
-                          {data.phone}
+                          {data.COMMENT}
                         </td>
                         <td className="text-sm flex justify-between  items-center text-gray-900 font-bold px-6 py-4 space-x-4 whitespace-nowrap">
                           <Link
-                            to={`/users/${data.id}`}
+                            to={`/users/${data.ID}`}
                             className="bg-teal-600 text-white px-6 py-2 rounded-lg"
                           >
                             VIew
                           </Link>
                           <Link
-                            to={`/edit-user/${data.id}`}
+                            to={`/edit-user/${data.ID}`}
                             className="bg-blue-600 text-white px-6 py-2 rounded-lg"
                           >
                             Edit
                           </Link>
                           <Link
-                            onClick={()=>deleteUser(data.id)}
+                            onClick={() => deleteUser(data.ID)}
                             to={"#"}
                             className="bg-red-600 text-white px-6 py-2 rounded-lg"
                           >
